@@ -16,13 +16,16 @@ etage_tod = 0
 pos_tod_y = 3
 pos_tod_x = 3
 
+# Da man auf seinem Adventure verschiedene 
+inventar=[]
+
 # karte_eg = Karte Erdgeschoss
 # die folgende Karte funktioniert so: oben links in der Ecke startet es mit Index[0][0]
 karte_eg = [
     [
     ["Garten", "Garten", "Terasse", "Büro", "Abstellkammer"],
     ["Küche", "Küche", "Wohnzimmmer", "Wohnzimmer", "Abstellkammer"],
-    [".", ".", ".", ".", "."],
+    ["Badezimmer", "Badezimmer", ".", ".", "."],
     [".", ".", "Garderobe", "Treppe", "."],
     [".", ".", "Eingang", ".", "."],
     ["XX", "XX", "Ende", "XX", "XX"]
@@ -106,7 +109,7 @@ while True:
             weitergraben = str(input("bist du neugiereig oder nicht? ja onder neine?").lower)
             if(weitergraben=="ja"):
                 print("Irgendwie sehe ich immer noch nichts? Weitergraben ja oder nein?")
-                nochweiter= str(input("Immernoch weitergraben?"))
+                nochweiter= str(input("Immernoch weitergraben?").lower())
             elif(weitergraben=="nein"):
                 print("Du schaufelst das gegrabene Loch wieder zu in gehst zurück zum Haus. Aus dem Augenwinkel siehst du kurz ein Flackern. Zwei gelbe Punkte, die deine jede Bewegung verfolgen")
                 if(nochweiter =="ja"):
@@ -115,6 +118,9 @@ while True:
                     print("völlig außer Atem richtest du dich auf und schaust dir deine Umgebung an. Eigentlich recht hübsch im Garten. Hohe Bäume, große Blumenbeete mit Rosen, Tulpen, Vergissmeinnicht. Und noch vielen weitern Blumen, von denen man den Namen nicht kennt. Hochwertige Gartenmöbel. Der Rasen ist ziemlich hoch, es scheint so als hätte bis vor ein paar Monaten sich noch jemand um diesen Garten gekümmert. Dann gibt es noch ein paar Vogelhäuser und ein schwarzer Schatten, der durch dein Blickfeld huscht... warte was?")
         elif(graben == "nein"):
             print(" du gehst wieder Richtung Haus")
+    
+    if(ich_bin_in == "Büro"):
+        print()
 
 
 
