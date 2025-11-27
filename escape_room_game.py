@@ -49,15 +49,15 @@ entdeckt =[
 #Funktion, die die neu erforschte Karte anzeigt
 
 def zeige_karte():
-    etage = karte_eg[etage_ich]
-    for y in range(len(etage)):
-        for x in range(len(etage[y])):
-            if entdeckt[y][x]:
-                print(f"[{etage[y][x]:12}]", end=" ")
+    etage = karte_eg[etage_ich] #diese Zeile holt sich die Etage, auf der sich der Spieler befindet
+    for y in range(len(etage)): #len(etage) = Anzahl der Zeilen der aktuellen Ebene.
+        for x in range(len(etage[y])): #Für jede Zeile (etage[y]) iterierst du über die Spalten. Dann hat sie len(etage[y]) = 5 Spalten -> x läuft von 0 bis 4.
+            if entdeckt[y][x]: #hier wird geschaut, ob der Spieler bereits in dem Raum war oder nicht , dementsprechend wird ein ? oder der Raumname ausgegeben
+                print(f"[{etage[y][x]:12}]", end=" ")# Raumname ausgegeben und das end sagt kein Zeilenumbruch
             else:
-                print("[     ?      ]", end=" ")
-        print()
-    print()
+                print("[     ?      ]", end=" ") # Raum noch nicht entdeckt
+        print() #Zeilenumbruch
+    print() #Abstand zum nachstehenden Text
 
 def move():
     try:
@@ -131,20 +131,26 @@ while True:
         print ("Die Erde scheint an dieser Stelle weich zu sein. Vielleicht kann man hier as ausgfraben? Möchtest du graben?")
         #das .lower() ist wichtig, damit sowohl ein groß als auch ein kleingeschriebenes Ja bzw. nein angenommen wird
         graben = str(input("ja oder nein?").lower())
-        if(graben== "ja"):
+        if graben == "ja":
             print("Hmm, bisher wurde noch nichts gefunden, möchtest du weiter graben?") 
-            weitergraben = str(input("bist du neugiereig oder nicht? ja onder nein?").lower)
-            if(weitergraben=="ja"):
-                print("Irgendwie sehe ich immer noch nichts? Weitergraben ja oder nein?")
-                nochweiter= str(input("Immernoch weitergraben?").lower())
-            elif(weitergraben=="nein"):
-                print("Du schaufelst das gegrabene Loch wieder zu in gehst zurück zum Haus. Aus dem Augenwinkel siehst du kurz ein Flackern. Zwei gelbe Punkte, die deine jede Bewegung verfolgen")
-                if(nochweiter =="ja"):
-                    print("Du findest eine Kiste. Diese scheint echt groß zu sein... Woah ok, sie ist so groß wie du selsbt. Wenn du den morschen Deckel öffnest, quitscht dieser in einem unangenehmen hohen Ton, das man die Zähne zusammenbeißt. In der Kiste ist eine Person, Haut geöblicher als die von Frankensteins Monster. Sie ist weiblich und in ihren haöb offenen Mund erkennt man 3 goldene Zähne. Erschrocken lässt du den Deckel wieder fallen. Der Anblick kannst du nicht mehr vergessen")
-                elif(nochweiter =="nein"):
-                    print("völlig außer Atem richtest du dich auf und schaust dir deine Umgebung an. Eigentlich recht hübsch im Garten. Hohe Bäume, große Blumenbeete mit Rosen, Tulpen, Vergissmeinnicht. Und noch vielen weitern Blumen, von denen man den Namen nicht kennt. Hochwertige Gartenmöbel. Der Rasen ist ziemlich hoch, es scheint so als hätte bis vor ein paar Monaten sich noch jemand um diesen Garten gekümmert. Dann gibt es noch ein paar Vogelhäuser und ein schwarzer Schatten, der durch dein Blickfeld huscht... warte was?")
-        elif(graben == "nein"):
-            print(" du gehst wieder Richtung Haus")
+            weitergraben = input("Bist du neugierig? ja oder nein? ").lower()
+
+            if weitergraben == "ja":
+                print("Irgendwie sehe ich immer noch nichts... weitergraben?")
+                nochweiter = input("Immernoch weitergraben? ja oder nein? ").lower()
+
+                if nochweiter == "ja":
+                    print("Du findest eine Kiste. Sie ist riesig... Im Inneren liegt eine Person mit, toter gelber Haut, gelber als Frankensteins Monster und 3 goldenen Zähnen. Erschrocken wirfst du den Deckel zu.")
+                else:
+                    print("Völlig außer Atem richtest du dich auf und schaust dich um...")
+    
+            else:
+                print("Du schaufelst das Loch wieder zu und gehst zurück zum Haus.")
+                print("Aus dem Augenwinkel siehst du zwei gelbe Punkte, die dich anschauen...")
+
+        elif graben == "nein":
+            print("Du gehst wieder Richtung Haus.")
+
     
     
 #Raum Büro
