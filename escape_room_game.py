@@ -40,6 +40,25 @@ karte_eg = [
     ]
 ]
 
+#Karte, die anzeigt in welchen Zimmer man schon gewesen ist
+entdeckt =[
+    [False for x in range(len(karte_eg[0][0]))]# innere Schleife, erzeugt Spalten pro Zeile, bei karte_eg[0][0] --> erste Spalte; „Erstelle eine Liste mit so vielen Zeilen, wie die Karte hat. Jede Zeile besteht aus so vielen False-Einträgen wie die Karte Spalten hat.“
+    for y in range(len(karte_eg[0])) # äußere Schleife, erzeugt Etagen, das karte_eg[0], ist das aktive Geschoss, das len(karte_eg[0]= Anzahl der Zeilen für die ?-Karte)
+]
+
+#Funktion, die die neu erforschte Karte anzeigt
+
+def zeige_karte():
+    etage = karte_eg[etage_ich]
+    for y in range(len(etage)):
+        for x in range(len(etage[y])):
+            if entdeckt[y][x]:
+                print(f"[{etage[y][x]:12}]", end=" ")
+            else:
+                print("[     ?      ]", end=" ")
+        print()
+    print()
+
 def move():
     try:
         # .lower() ist wichtig, damit "Nord" auch als "nord" erkannt wird
@@ -58,6 +77,7 @@ def move():
             print("Du gehst richtung Norden.")
             if(pos_ich_y > 0):
                 pos_ich_y -= 1 # es muss Minus sein, weil der Index[y] nach oben hin immer kleiner wird
+                
             else:
                 print("Du kannst nicht weiter nach Norden gehen.")
 
@@ -65,6 +85,7 @@ def move():
             print("Du gehst richtung Osten.")
             if(pos_ich_x < 4):
                 pos_ich_x += 1
+                
             else:
                 print("Du kannst nicht weiter nach Osten gehen.")
 
@@ -72,6 +93,7 @@ def move():
             print("Du gehst richtung Süden.")
             if(pos_ich_y < 5):
                 pos_ich_y += 1
+                
             else:
                 print("Du kannst nicht weiter nach Süden gehen.")
 
@@ -79,6 +101,7 @@ def move():
             print("Du gehst richtung Westen.")
             if(pos_ich_x > 0):
                 pos_ich_x -= 1
+                
             else:
                 print("Du kannst nicht weiter nach Westen gehen.")
 
@@ -86,6 +109,7 @@ def move():
             # Fängt falsche Eingaben ab, sonst passiert einfach "nichts"
             print("Falsche Richtung")
             exit() #SPÄTERLÖSCHEN
+    
 
 while True:
     move()
@@ -94,6 +118,9 @@ while True:
     ich_bin_in = karte_eg[etage_ich][pos_ich_y][pos_ich_x]
 
     print ("Du befindest dich in "+ ich_bin_in)
+
+    entdeckt[pos_ich_y][pos_ich_x] = True
+    zeige_karte()
 
     #Wenn man in Garten angekommen ist, kann man mit der Umgebung interagieren
     if(ich_bin_in=="Garten"):
@@ -106,7 +133,7 @@ while True:
         graben = str(input("ja oder nein?").lower())
         if(graben== "ja"):
             print("Hmm, bisher wurde noch nichts gefunden, möchtest du weiter graben?") 
-            weitergraben = str(input("bist du neugiereig oder nicht? ja onder neine?").lower)
+            weitergraben = str(input("bist du neugiereig oder nicht? ja onder nein?").lower)
             if(weitergraben=="ja"):
                 print("Irgendwie sehe ich immer noch nichts? Weitergraben ja oder nein?")
                 nochweiter= str(input("Immernoch weitergraben?").lower())
@@ -114,13 +141,18 @@ while True:
                 print("Du schaufelst das gegrabene Loch wieder zu in gehst zurück zum Haus. Aus dem Augenwinkel siehst du kurz ein Flackern. Zwei gelbe Punkte, die deine jede Bewegung verfolgen")
                 if(nochweiter =="ja"):
                     print("Du findest eine Kiste. Diese scheint echt groß zu sein... Woah ok, sie ist so groß wie du selsbt. Wenn du den morschen Deckel öffnest, quitscht dieser in einem unangenehmen hohen Ton, das man die Zähne zusammenbeißt. In der Kiste ist eine Person, Haut geöblicher als die von Frankensteins Monster. Sie ist weiblich und in ihren haöb offenen Mund erkennt man 3 goldene Zähne. Erschrocken lässt du den Deckel wieder fallen. Der Anblick kannst du nicht mehr vergessen")
-                if(nochweiter =="nein"):
+                elif(nochweiter =="nein"):
                     print("völlig außer Atem richtest du dich auf und schaust dir deine Umgebung an. Eigentlich recht hübsch im Garten. Hohe Bäume, große Blumenbeete mit Rosen, Tulpen, Vergissmeinnicht. Und noch vielen weitern Blumen, von denen man den Namen nicht kennt. Hochwertige Gartenmöbel. Der Rasen ist ziemlich hoch, es scheint so als hätte bis vor ein paar Monaten sich noch jemand um diesen Garten gekümmert. Dann gibt es noch ein paar Vogelhäuser und ein schwarzer Schatten, der durch dein Blickfeld huscht... warte was?")
         elif(graben == "nein"):
             print(" du gehst wieder Richtung Haus")
     
+    
+#Raum Büro
     if(ich_bin_in == "Büro"):
-        print()
+        print("Dieser Raum sieht ziemlich unordentlich aus, überall liegen Papiere herum auf den Boden, Tischen. Die Gardinen sind halb zugezogen vielleicht ist hier etwas zu finden")
+        print("Möchtest du etwas durchsuchen? Schreibtisch, Regale, Computer")
+
+
 
 
 
