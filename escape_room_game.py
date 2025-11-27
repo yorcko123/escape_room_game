@@ -36,27 +36,41 @@ def move():
         print("du pisser")
         return # WICHTIG: Bricht hier ab, falls der Input fehlschlägt
 
-    global pos_ich_y, pos_ich_x
+    global pos_ich_y, pos_ich_x #Copilot hat gesagt, das soll so
     match richtung:
         case "nord":
             print("Du gehst richtung Norden.")
-            pos_ich_y -= 1
+            if(pos_ich_y > 0):
+                pos_ich_y -= 1
+            else:
+                print("Du kannst nicht weiter nach Norden gehen.")
 
         case "ost":
             print("Du gehst richtung Osten.")
-            pos_ich_x += 1
+            if(pos_ich_x < 4):
+                pos_ich_x += 1
+            else:
+                print("Du kannst nicht weiter nach Osten gehen.")
 
         case "süd":
             print("Du gehst richtung Süden.")
-            pos_ich_y += 1
+            if(pos_ich_y < 5):
+                pos_ich_y += 1
+            else:
+                print("Du kannst nicht weiter nach Süden gehen.")
 
         case "west":
             print("Du gehst richtung Westen.")
-            pos_ich_x -= 1
+            if(pos_ich_x > 0):
+                pos_ich_x -= 1
+            else:
+                print("Du kannst nicht weiter nach Westen gehen.")
 
         case _:
             # Fängt falsche Eingaben ab, sonst passiert einfach "nichts"
             print("Falsche Richtung")
+            exit() #SPÄTERLÖSCHEN
 
-move()
-print (karte_eg[etage_ich][pos_ich_y][pos_ich_x])
+while True:
+    move()
+    print ("Du befindest dich in "+karte_eg[etage_ich][pos_ich_y][pos_ich_x])
