@@ -1,4 +1,6 @@
 import random
+import time
+import threading
 
 #Das print() wird sofort beim Deklarieren der Klasse ausgeführt. Besser: __init__ überschreiben oder Nachricht beim raise übergeben. Deswegen: Pass
 #class InputErr(Exception):
@@ -16,8 +18,45 @@ etage_tod = 0
 pos_tod_y = 3
 pos_tod_x = 3
 
-# Da man auf seinem Adventure verschiedene 
+#Position Spieler im Sidegame
+etage_P = 0
+pos_x_P = random.randint(0,4)
+pos_y_P = random.randint(0,4)
+richt= [(0,1),(0,-1),(1,0),(-1,0)]
+rr=random.choice(richt)
+nach_x=pos_x_P+rr
+nach_y=pos_y_P+rr
+
+def entfernung():
+    return abs(pos_ich_x - pos_x_P) + abs(pos_ich_y - pos_y_P)
+
+# Da man auf seinem Adventure verschiedene Items mitnimmt, braucht man ein Inventar
 inventar=[]
+
+def nehmen(item): #Item aufnehmen
+    inventar.append(item) #Item aufgenommen
+
+timer_abgelaufen = False #globale Variable, die speichert, ob Timer abgelaufen ist oder nicht
+
+def countdown():
+    global timer_abgelaufen #damit gesagt, dass man eine globale Var ändern möchte. Ohne erkennt das Programm nicht, dass der Timer abgelaufen ist
+    for i in range(30, 0, -1):#zählt immer ein runter
+        print(f"\n {i} Sekunden übrig...")  
+        time.sleep(1)#timer wartet eine Sekunde
+
+    timer_abgelaufen = True
+    print("\n⏰ Zeit ist abgelaufen!\n")
+
+def BlJa_gewonnen():
+    print("Nach dem Sieg wird dir schwummrig und deine Vision blurry auf den Bildschirm erkennst du weniger, aber es wirkt so als ob dir zwei gelbe Augen entgegen starren")
+    print("Als du erwachst bemerkst du, bist du auf einmal ein Monster, eine Stimme sagt dir, dass du den Spieler fangen sollst")
+    print("Fange den Spieler!, du hast 30 sec", 
+)
+    
+    threading.Thread(target=countdown, daemon=True).start() #threads erlauben Timer während Game zu laufen
+
+
+
 
 # karte_eg = Karte Erdgeschoss
 # die folgende Karte funktioniert so: oben links in der Ecke startet es mit Index[0][0]
@@ -157,6 +196,51 @@ while True:
     if(ich_bin_in == "Büro"):
         print("Dieser Raum sieht ziemlich unordentlich aus, überall liegen Papiere herum auf den Boden, Tischen. Die Gardinen sind halb zugezogen vielleicht ist hier etwas zu finden")
         print("Möchtest du etwas durchsuchen? Schreibtisch, Regale, Computer")
+        Entscheidung_Büro= str(input("Was möchtest du dir anschauen?").lower())
+        if (Entscheidung_Büro == "schreibtisch"):
+            print("Du öffnest alle möglichen Schubladen und findest viele Büromaterialien. Darunter eine Büroklammer, möchtest du sie mitnehmen?")
+            Büroklammern_mitnehmen= str(input("ja oder nein?").lower())
+            if(Büroklammern_mitnehmen=="ja"):
+                nehmen("Büroklammern")
+            else: 
+                print("Du schließt die Schublade wieder")
+        elif(Entscheidung_Büro=="regale"):
+            "Du siehst ein massiven Bücherschrank, der förmlich mit Büchern überquilt. Verscheidene Genre mehrfach vertreten, jedoch sind Horrorbücher nur 5 mal vorhanden"
+        elif(Entscheidung_Büro == "computer"):
+            print("Gib das Passwort ein:")
+            passwort=str(input("Passwort:"))
+        if(passwort=="Frankenstein"):
+            print("Du öffnest den Computer und du befindest dich in einem Spiel BlackJack. Der Dealer gegenüber hat eine 7")
+            zahlen=random.randint(4,21)
+            print("Deine Zahlen sind summiert sind:",zahlen , "hit oder stand?")
+            hit=(str(input("ja oder nein?")).lower())
+            if(hit=="ja"):
+                zahl3=random.randint(4,21)
+                print ("Deine dritte Karte ist:",zahl3 )
+                
+                if(zahlen+zahl3>21):
+                    print("Leider verloren")
+                else:
+                    print("Gewonnen!")
+                    BlJa_gewonnen()
+            if(hit=="nein" and zahlen+zahl3>17<=21):
+                print("Gewonnen")
+                BlJa_gewonnen()
+                dist=entfernung()
+                if(dist==0):
+                    print("Du hast den Spieler gefangen")
+                elif(dist==1):
+                    print("Du hörst Schritte im Nebenraum")
+                elif(dist==2):
+                    print("Es sind entfernte Geräusche zu hören")
+            else:
+                print("Leider verloren")
+        else:
+            print("Falsch, suche woanders weiter")
+    else:
+        print("Du verlässt den Raum")
+
+
 
 
 
