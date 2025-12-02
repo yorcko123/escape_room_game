@@ -23,9 +23,9 @@ etage_P = 0
 pos_x_P = random.randint(0,4)
 pos_y_P = random.randint(0,4)
 richt= [(0,1),(0,-1),(1,0),(-1,0)]
-rr=random.choice(richt)
-nach_x=pos_x_P+rr
-nach_y=pos_y_P+rr
+rrx,rry=random.choice(richt)
+nach_x=pos_x_P+rrx
+nach_y=pos_y_P+rry
 
 def entfernung():
     return abs(pos_ich_x - pos_x_P) + abs(pos_ich_y - pos_y_P)
@@ -39,13 +39,14 @@ def nehmen(item): #Item aufnehmen
 timer_abgelaufen = False #globale Variable, die speichert, ob Timer abgelaufen ist oder nicht
 
 def countdown():
+    time.sleep(10)
     global timer_abgelaufen #damit gesagt, dass man eine globale Var ändern möchte. Ohne erkennt das Programm nicht, dass der Timer abgelaufen ist
     for i in range(30, 0, -1):#zählt immer ein runter
         print(f"\n {i} Sekunden übrig...")  
         time.sleep(1)#timer wartet eine Sekunde
 
     timer_abgelaufen = True
-    print("\n⏰ Zeit ist abgelaufen!\n")
+    print("\n Zeit ist abgelaufen!\n")
 
 def BlJa_gewonnen():
     print("Nach dem Sieg wird dir schwummrig und deine Vision blurry auf den Bildschirm erkennst du weniger, aber es wirkt so als ob dir zwei gelbe Augen entgegen starren")
@@ -63,19 +64,19 @@ def BlJa_gewonnen():
 karte_eg = [
     [
     ["Garten", "Garten", "Terasse", "Büro", "Abstellkammer"],
-    ["Küche", "Küche", "Wohnzimmmer", "Wohnzimmer", "Abstellkammer"],
-    ["Badezimmer", "Badezimmer", ".", ".", "."],
-    [".", ".", "Garderobe", "Treppe", "."],
+    ["Küchenende", "Küche", "Wohnzimmmer", "Wohnzimmerende", "Abstellkammer"],
+    ["Badezimmer", "Badezimmer", "Flur", "Schlafzimmer", "Badezimmersuite"],
+    [".", ".", "Garderobe", "Kellertreppe", "."],
     [".", ".", "Eingang", ".", "."],
     ["XX", "XX", "Ende", "XX", "XX"]
     ],
     # Warum zwei Karten die identsich wirken?
     [
-    [".", ".", ".", ".", "."],
-    [".", "Küche", ".", "Speisekammer", "."],
-    [".", ".", ".", ".", "."],
-    [".", "Wohnzimmer", "Esszimmer", ".", "."],
-    [".", ".", ".", ".", "."]
+    [".",     ".",                   ".",                     ".",           "."],
+    [".",     ".",                   ".",                     ".",           "."],
+    [".",     ".",                   ".",                     ".",           "."],
+    [".",     "Ritualraum",          "Abstellraum",          "Kellertreppe", "Tresorraum"], # Habe es gefixt
+    [".",     "Keller links Ende",   "Keller links Mitte",   "Kellerflur",   "Keller rechts Ende"]
     ]
 ]
 
@@ -163,7 +164,7 @@ while True:
 
     #Wenn man in Garten angekommen ist, kann man mit der Umgebung interagieren
     if(ich_bin_in=="Garten"):
-        print("Der Garten ist groß, möchtest du ihn noch weiter erkunden? So gehe nach westen")
+        print("Der Garten ist groß, das Gras ist nass vom Regen möchtest du ihn noch weiter erkunden? So gehe nach westen")
     
     # an der Stelle [0][0][0] kann man was besonderes machen
     if etage_ich==0 and pos_ich_x==0 and pos_ich_y ==0:
@@ -179,7 +180,7 @@ while True:
                 nochweiter = input("Immernoch weitergraben? ja oder nein? ").lower()
 
                 if nochweiter == "ja":
-                    print("Du findest eine Kiste. Sie ist riesig... Im Inneren liegt eine Person mit, toter gelber Haut, gelber als Frankensteins Monster und 3 goldenen Zähnen. Erschrocken wirfst du den Deckel zu.")
+                    print("Du findest eine Kiste. Sie ist riesig... Im Inneren liegt eine Person mit, toter gelber Haut, gelber als Frankensteins Monster und 6 goldenen Zähnen. Erschrocken wirfst du den Deckel zu.")
                 else:
                     print("Völlig außer Atem richtest du dich auf und schaust dich um...")
     
@@ -193,53 +194,128 @@ while True:
     
     
 #Raum Büro
-    if(ich_bin_in == "Büro"):
-        print("Dieser Raum sieht ziemlich unordentlich aus, überall liegen Papiere herum auf den Boden, Tischen. Die Gardinen sind halb zugezogen vielleicht ist hier etwas zu finden")
-        print("Möchtest du etwas durchsuchen? Schreibtisch, Regale, Computer")
-        Entscheidung_Büro= str(input("Was möchtest du dir anschauen?").lower())
-        if (Entscheidung_Büro == "schreibtisch"):
-            print("Du öffnest alle möglichen Schubladen und findest viele Büromaterialien. Darunter eine Büroklammer, möchtest du sie mitnehmen?")
-            Büroklammern_mitnehmen= str(input("ja oder nein?").lower())
-            if(Büroklammern_mitnehmen=="ja"):
-                nehmen("Büroklammern")
-            else: 
-                print("Du schließt die Schublade wieder")
-        elif(Entscheidung_Büro=="regale"):
-            "Du siehst ein massiven Bücherschrank, der förmlich mit Büchern überquilt. Verscheidene Genre mehrfach vertreten, jedoch sind Horrorbücher nur 5 mal vorhanden"
-        elif(Entscheidung_Büro == "computer"):
-            print("Gib das Passwort ein:")
-            passwort=str(input("Passwort:"))
-        if(passwort=="Frankenstein"):
-            print("Du öffnest den Computer und du befindest dich in einem Spiel BlackJack. Der Dealer gegenüber hat eine 7")
-            zahlen=random.randint(4,21)
-            print("Deine Zahlen sind summiert sind:",zahlen , "hit oder stand?")
-            hit=(str(input("ja oder nein?")).lower())
-            if(hit=="ja"):
-                zahl3=random.randint(4,21)
-                print ("Deine dritte Karte ist:",zahl3 )
+        if(ich_bin_in == "Büro"):
+            print("Dieser Raum sieht ziemlich unordentlich aus, überall liegen Papiere herum auf den Boden, Tischen. Die Gardinen sind halb zugezogen vielleicht ist hier etwas zu finden")
+            print("Möchtest du etwas durchsuchen? Schreibtisch, Regale, Computer")
+            Entscheidung_Büro= str(input("Was möchtest du dir anschauen?").lower())
+            if (Entscheidung_Büro == "schreibtisch"):
+                print("Du öffnest alle möglichen Schubladen und findest viele Büromaterialien. Darunter eine Büroklammer, möchtest du sie mitnehmen?")
+                Büroklammern_mitnehmen= str(input("ja oder nein?").lower())
+                if(Büroklammern_mitnehmen=="ja"):
+                    nehmen("Büroklammern")
+                else: 
+                    print("Du schließt die Schublade wieder")
+            elif(Entscheidung_Büro=="regale"):
+                "Du siehst ein massiven Bücherschrank, der förmlich mit Büchern überquilt. Verscheidene Genre mehrfach vertreten, jedoch sind Horrorbücher nur 5 mal vorhanden"
+            elif(Entscheidung_Büro == "computer"):
+                print("Gib das Passwort ein:")
+                passwort=str(input("Passwort:"))
+            if(passwort=="Frankenstein"):
+                print("Du öffnest den Computer und du befindest dich in einem Spiel BlackJack. Der Dealer gegenüber hat eine 7")
+                zahlen=random.randint(4,21)
+                print("Deine Zahlen sind summiert sind:",zahlen , "hit oder stand?")
+                hit=(str(input("ja oder nein?")).lower())
+                if(hit=="ja"):
+                    zahl3=random.randint(4,21)
+                    print ("Deine dritte Karte ist:",zahl3 )
                 
-                if(zahlen+zahl3>21):
-                    print("Leider verloren")
-                else:
-                    print("Gewonnen!")
+                    if(zahlen+zahl3>21):
+                        print("Leider verloren")
+                    else:
+                        print("Gewonnen!")
+                        BlJa_gewonnen()
+                if(hit=="nein" and zahlen+zahl3>17<=21):
+                    print("Gewonnen")
                     BlJa_gewonnen()
-            if(hit=="nein" and zahlen+zahl3>17<=21):
-                print("Gewonnen")
-                BlJa_gewonnen()
-                dist=entfernung()
-                if(dist==0):
-                    print("Du hast den Spieler gefangen")
-                elif(dist==1):
-                    print("Du hörst Schritte im Nebenraum")
-                elif(dist==2):
-                    print("Es sind entfernte Geräusche zu hören")
+                    dist=entfernung()
+                    if(dist==0):
+                        print("Du hast den Spieler gefangen")
+                    elif(dist==1):
+                        print("Du hörst Schritte im Nebenraum")
+                    elif(dist==2):
+                        print("Es sind entfernte Geräusche zu hören")
+                else:
+                    print("Leider verloren")
             else:
-                print("Leider verloren")
+                print("Falsch, suche woanders weiter")
         else:
-            print("Falsch, suche woanders weiter")
-    else:
-        print("Du verlässt den Raum")
+            print("Du verlässt den Raum")
 
+
+#Raum Badezimmersuite
+    if (ich_bin_in=="Badezimmersuite"):
+        print("Du befindest dich nun in der Badezimmersuite. Auffällig ist das Waschbecken, die Dusche scheint sehr verkalkt zu sein, dies kann nicht mal der Badezimmervorhang verdecken")
+        print("Was möchtest du untersuchen?")
+        BZS_untersuchen=str(input("Waschbecken oder Dusche?").lower())
+        if(BZS_untersuchen=="waschbecken"):
+            print ("Du siehst zwei Ringe innerhalb des Waschbeckens")
+        elif(BZS_untersuchen=="dusche"):
+            print("Nichts als Kalk. Wirklich. Ist ja wiederlich... Moment mal, du schaust nach oben und siehst, dass die STange an die der Badezimmervorhang dran ist, komisch aussieht. Möchtest du ihn dir näher ansehen?")
+            BZS_Ent=str(input("ja oder nein").lower())
+            if(BZS_Ent=="ja"):
+                nehmen("Brecheisen")
+                print("Ein Brecheisen! Du hast es genommen und kannst es später nutzen. Gibt es vielleicht ein Brett, waelches man afmachen kann")
+            elif(BZS_Ent=="nein"):
+                print("Du gehst wieder")
+
+        else:
+            print("Du verlässt den Raum")
+
+
+#Raum Terasse
+    if(ich_bin_in=="Terasse"):
+        print("Als du die Terasse betrittst, knartschen die Bretter unter dir... Möchtest du sie anheben, etwas stabiles könnte sie öffnen?")
+        T_Ent=str(input("Anheben ja oder nein?"))
+        if(T_Ent=="ja"):
+                nehmen("Schlüssel")
+                print("Du findest ein Schlüssel")
+        elif(T_Ent=="nein"):
+                print("Du gehst einfach weiter")
+        else:
+            print("Du gehst weiter")
+
+#Raum Küche
+    if(ich_bin_in=="Küche"):
+        print("Eine große Küche. Sie wurde schon lange nicht mehr benutzt")
+
+#Raum Küchenende
+    if(ich_bin_in=="Küchenende"):
+        print("Das Ende der Küche. Auf der Arbeitsplatte liegt Besteck")
+
+#Raum Wohnzimmer
+    if(ich_bin_in=="Wohnzimmer"):
+        print("Ein großes Wohnzimmer. Es hängen mehrere Gemälde. Links scheint eine große Küche zu sein.")
+
+#Raum Wohnzimmerende
+    if(ich_bin_in=="Wohnzimmerende"):
+        print("Das Ende des Wohnzimmers.")
+
+#Raum Badezimmer
+    if(ich_bin_in=="Badezimmer"):
+        print("Ein Badezimmer. Die Badewanne ist hinter dem Vorhang versteckt")
+
+#Raum Flur
+    if(ich_bin_in=="Flur"):
+        print("Ein langer Flur. Links und rechts sind Türen")
+
+#Raum Schlafzimmer
+    if(ich_bin_in=="Schlafzimmer"):
+        print("Ein durchschnittliches Schlafzimmer. Es gibt ein paar Familienfotos")
+
+#Raum Kellertreppe
+    if(ich_bin_in=="Kellertreppe"):
+        if("Schlüssel" in inventar):
+            print("Du öffnest die Tür zur Kellertreppe")
+            etage_ich += 1
+            print("Du befindest dich nun im Keller, es riecht sehr nach Schimmel und modrig, wohin möchtest du hingehen?")
+        else:
+            print("Du besitzt den Schlüssel nicht")
+        
+
+
+
+
+        
 
 
 
