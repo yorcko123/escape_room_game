@@ -27,6 +27,8 @@ rrx,rry=random.choice(richt)
 nach_x=pos_x_P+rrx
 nach_y=pos_y_P+rry
 
+
+#Entfernung des Spielers, den es im Sidegame zu fangen gilt
 def entfernung():
     return abs(pos_ich_x - pos_x_P) + abs(pos_ich_y - pos_y_P)
 
@@ -75,7 +77,7 @@ karte_eg = [
     [".",     ".",                   ".",                     ".",           "."],
     [".",     ".",                   ".",                     ".",           "."],
     [".",     ".",                   ".",                     ".",           "."],
-    [".",     "Ritualraum",          "Abstellraum",          "Kellertreppe", "Tresorraum"], # Habe es gefixt
+    [".",     "Ritualraum",          "Abstellraum",          "Kellertreppe_unten", "Tresorraum"], # Habe es gefixt
     [".",     "Keller links Ende",   "Keller links Mitte",   "Kellerflur",   "Keller rechts Ende"]
     ]
 ]
@@ -313,9 +315,26 @@ while True:
         
 
 
+#Raum Kellertreppe_unten
+    if(ich_bin_in=="Kellertreppe_unten"):
+        print("Du befindest dich nun im Keller. Er ist ziemlich nass und alles knartscht wenn man sich bewegt. wohin möchtest du nun gehen?")
+        print("Wo möchtest du nun lang gehen? (nord/ost/süd/west)?")
 
-
-        
+#Raum Tresorraum
+    if(ich_bin_in=="Tresorraum"):
+        print("Ein Raum im Keller. Am Ende steht ein kleiner Tresor mit Symbolen darüber. Du kannst zurück in den Flur gehen")
+        if("Hinweis" in inventar):
+            print("Bitte dreh die Zahlen, um den Tresor zu öffnen:")
+            Tresor_psw=int(input("Zahl hier eingeben:"))
+            if(Tresor_psw==""):
+                print("der Tresor öffnet sich und du findest das Vermögen deiner verstorbenen Tante")
+                nehmen("Vermögen")
+                if("Vermögen" in inventar):
+                    print("Du hörst ")
+            else:
+                print("Das Passwort ist falsch")
+        else:
+            print("Hmmm, ein Drehschloss, du hast auf deiner Erkundung schon ein paar Zahlen gesehen, ber vllt bräuchtest du mehr Hinweise...")
 
 
 
